@@ -18,6 +18,12 @@ function CreateArea({ getNote }) {
     setNoteText(newText);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      submitNote(e);
+    }
+  };
+
   const submitNote = (e) => {
     getNote(noteTitle, noteText);
     setNoteTitile("");
@@ -26,14 +32,14 @@ function CreateArea({ getNote }) {
   };
 
   const expandForm = () => {
-    setIsFormClicked((prevState) => !prevState);
+    setIsFormClicked(true);
   };
 
   return (
     <div>
-      <form onClick={expandForm} className="create-note">
+      <form className="create-note" onKeyDown={handleKeyDown}>
         {isFormClicked && (
-          <input
+          <textarea
             onChange={addTitle}
             name="title"
             placeholder="Title"
@@ -41,6 +47,7 @@ function CreateArea({ getNote }) {
           />
         )}
         <textarea
+          onClick={expandForm}
           onChange={addText}
           name="content"
           placeholder="Take a note..."
